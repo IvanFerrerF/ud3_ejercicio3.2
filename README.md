@@ -1,66 +1,258 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+EJERCICIO 4
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1. ¿Qué crees que hace el método create de la clase Schema?
 
-## About Laravel
+El método create de la clase Schema en Laravel crea una nueva tabla en la base de datos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Ejemplo:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Schema::create('users', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->timestamps();
+});
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Aquí, Schema::create('users', ...) crea una tabla llamada users.
+El segundo argumento es una función que define las columnas y atributos de la tabla utilizando el objeto $table.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. ¿Qué crees que hace $table->string('email')->primary();?
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Este código agrega una columna email de tipo string (cadena de texto) y la establece como la clave primaria de la tabla.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Detalles:
 
-## Laravel Sponsors
+    $table->string('email'): Crea una columna llamada email que almacena texto.
+    ->primary(): Define esta columna como la clave primaria de la tabla, lo que garantiza que cada valor en esta columna sea único y no nulo.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    Nota: Normalmente no se usa un string como clave primaria, ya que las claves primarias suelen ser enteros o UUIDs para optimizar las consultas.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+3. ¿Cuántas tablas hay definidas? Indica el nombre de cada tabla.
 
-## Contributing
+Para responder esta pregunta:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Cuenta cuántos archivos hay en la carpeta database/migrations.
+    Abre cada archivo y busca la llamada a Schema::create. El primer argumento de esta función será el nombre de la tabla.
 
-## Code of Conduct
+Ejemplo:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    Si tienes los siguientes archivos:
+        2023_01_01_000000_create_users_table.php → Tabla: users
+        2023_01_01_000001_create_password_resets_table.php → Tabla: password_resets
 
-## Security Vulnerabilities
+Respuesta esperada: Supongamos que tienes las tablas predeterminadas de Laravel:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    users (gestión de usuarios).
+    password_resets (para gestionar solicitudes de restablecimiento de contraseñas).
+    personal_access_tokens (para autenticar usuarios con tokens, utilizada con Sanctum).
 
-## License
+El número exacto puede variar dependiendo de si has añadido más migraciones al proyecto.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+EJERCICIO 5
+
+¿Cuantas tablas aparecen?
+
+Cantidad de tablas: 9.
+Nombres de las tablas:
+
+    cache
+    cache_locks
+    failed_jobs
+    job_batches
+    jobs
+    migrations
+    password_reset_tokens
+    sessions
+    users
+
+    Tablas encontradas en test1
+
+    cache:
+        Almacena los datos en caché configurados para el almacenamiento en base de datos.
+        Relacionada con el uso del driver de caché database.
+
+    cache_locks:
+        Utilizada para gestionar bloqueos en la caché.
+        Normalmente creada si usas caché concurrente en base de datos.
+
+    failed_jobs:
+        Registra los trabajos en cola (jobs) que fallaron durante su ejecución.
+        Creada automáticamente si configuras un sistema de cola.
+
+    job_batches:
+        Almacena información sobre lotes de trabajos (batches) que se ejecutan en cola.
+
+    jobs:
+        Almacena los trabajos en cola pendientes de ser ejecutados.
+
+    migrations:
+        Lleva un registro de las migraciones ejecutadas en tu base de datos.
+        Esto asegura que las migraciones no se ejecuten dos veces.
+
+    password_reset_tokens:
+        Registra las solicitudes de restablecimiento de contraseñas.
+        Anteriormente llamada password_resets.
+
+    sessions:
+        Almacena las sesiones activas de los usuarios si configuras SESSION_DRIVER=database.
+
+    users:
+        Contiene información de los usuarios registrados en tu aplicación.
+
+    
+    EJERCICIO 6
+
+    1. php artisan migrate
+
+    Qué hace:
+        Ejecuta todas las migraciones pendientes en la carpeta database/migrations para crear o modificar tablas en la base de datos.
+    Cuándo usarlo:
+        Al configurar la base de datos inicial o agregar nuevas migraciones al proyecto.
+    Ejemplo de salida:
+
+    Migrating: 2023_01_01_000000_create_users_table
+    Migrated:  2023_01_01_000000_create_users_table (time: 0.03s)
+
+2. php artisan migrate:status
+
+    Qué hace:
+        Muestra el estado de las migraciones, indicando cuáles ya han sido ejecutadas y cuáles están pendientes.
+    Cuándo usarlo:
+        Para verificar qué migraciones han sido aplicadas y cuáles no.
+    Ejemplo de salida:
+
+    +------+------------------------------------------------------------+-------+
+    | Ran? | Migration                                                  | Batch |
+    +------+------------------------------------------------------------+-------+
+    | Yes  | 2023_01_01_000000_create_users_table                       | 1     |
+    | No   | 2023_01_02_000000_create_password_resets_table             |       |
+    +------+------------------------------------------------------------+-------+
+
+3. php artisan migrate:rollback
+
+    Qué hace:
+        Revierte la última serie de migraciones aplicadas (es decir, el último batch).
+    Cuándo usarlo:
+        Para deshacer cambios recientes en la base de datos realizados por las migraciones.
+    Ejemplo de uso:
+        Después de ejecutar una migración que introdujo un error o datos incorrectos.
+
+4. php artisan migrate:reset
+
+    Qué hace:
+        Revierte todas las migraciones, eliminando todas las tablas creadas por las migraciones.
+    Cuándo usarlo:
+        Cuando necesitas reiniciar completamente el esquema de la base de datos.
+    Nota:
+        Este comando no ejecuta nuevamente las migraciones, solo las revierte.
+
+5. php artisan migrate:refresh
+
+    Qué hace:
+        Revierte todas las migraciones y luego las ejecuta nuevamente en el orden correcto.
+    Cuándo usarlo:
+        Para reiniciar el esquema de la base de datos mientras mantienes las migraciones al día.
+    Ejemplo:
+        Útil durante el desarrollo cuando necesitas comenzar desde cero con las tablas actualizadas.
+
+6. php artisan make:migration
+
+    Qué hace:
+        Crea un nuevo archivo de migración en la carpeta database/migrations.
+    Cuándo usarlo:
+        Al querer definir cambios en la estructura de la base de datos (crear nuevas tablas, modificar existentes, etc.).
+    Ejemplo de uso:
+
+    php artisan make:migration create_products_table
+
+        Esto crea un archivo llamado algo como: 2025_01_08_000001_create_products_table.php.
+
+7. php artisan migrate --seed
+
+    Qué hace:
+        Ejecuta las migraciones pendientes y luego ejecuta los seeders configurados en database/seeders.
+    Cuándo usarlo:
+        Para aplicar migraciones y luego rellenar la base de datos con datos iniciales o de prueba.
+    Nota:
+        Requiere que los seeders estén configurados y definidos.
+
+Resumen rápido de lo que hace cada comando
+Comando	Acción
+php artisan migrate	Aplica todas las migraciones pendientes.
+php artisan migrate:status	Muestra el estado de las migraciones (ejecutadas o pendientes).
+php artisan migrate:rollback	Revierte el último batch de migraciones aplicadas.
+php artisan migrate:reset	Revierte todas las migraciones.
+php artisan migrate:refresh	Revierte todas las migraciones y las vuelve a ejecutar.
+php artisan make:migration	Crea un nuevo archivo de migración.
+php artisan migrate --seed	Aplica migraciones y ejecuta los seeders configurados.
+
+
+EJERCICIO 8
+
+Para añadir un nuevo campo (apellido) a la tabla alumnos, necesitas crear una nueva migración que realice esta modificación en la estructura de la tabla.
+
+Pasos para añadir un nuevo campo a una tabla
+1. Crear una nueva migración
+
+Ejecuta el siguiente comando para generar una migración que altere la tabla alumnos:
+
+php artisan make:migration add_apellido_to_alumnos_table --table=alumnos
+
+Esto creará un archivo en la carpeta database/migrations con un nombre similar a:
+
+2025_01_08_123456_add_apellido_to_alumnos_table.php
+
+2. Editar el archivo de migración
+
+    Abre el archivo recién creado en tu editor de texto (por ejemplo, VSCode).
+    Modifica la función up() para agregar el nuevo campo apellido:
+
+public function up()
+{
+    Schema::table('alumnos', function (Blueprint $table) {
+        $table->string('apellido')->after('nombre'); // Añade el campo después de 'nombre'
+    });
+}
+
+Modifica la función down() para eliminar el campo apellido si es necesario revertir la migración:
+
+    public function down()
+    {
+        Schema::table('alumnos', function (Blueprint $table) {
+            $table->dropColumn('apellido');
+        });
+    }
+
+3. Ejecutar la migración
+
+Ejecuta el siguiente comando para aplicar la migración:
+
+php artisan migrate
+
+Laravel añadirá el campo apellido a la tabla alumnos.
+4. Verificar la estructura de la tabla
+
+    Accede al cliente de MariaDB:
+
+docker exec -it mariadb-server mariadb -u root -p
+
+Conéctate a la base de datos test2:
+
+USE test2;
+
+Revisa la estructura de la tabla alumnos:
+
+    DESCRIBE alumnos;
+
+    Deberías ver el campo apellido en la tabla.
+
+Resumen de los pasos
+
+    Crear una nueva migración con php artisan make:migration.
+    Modificar las funciones up() y down() en el archivo generado.
+    Ejecutar la migración con php artisan migrate.
+    Verificar que el nuevo campo esté en la tabla alumnos.
+
