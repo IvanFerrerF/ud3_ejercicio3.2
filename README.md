@@ -256,3 +256,104 @@ Resumen de los pasos
     Ejecutar la migración con php artisan migrate.
     Verificar que el nuevo campo esté en la tabla alumnos.
 
+====================================================================
+====================================================================
+
+Way of Working
+Requisitos tecnológicos
+
+Para trabajar en este proyecto, necesitas los siguientes componentes instalados y configurados en tu entorno de desarrollo:
+
+    Sistema operativo:
+        Cualquier distribución de Linux compatible (probado en Ubuntu y derivados).
+
+    Dependencias principales:
+        PHP >= 8.1 (incluyendo extensiones como php-mysql).
+        Composer (gestor de dependencias de PHP).
+        Docker y Docker Compose (para la base de datos MariaDB).
+        Laravel 11.x.
+        Postman (opcional, para probar las APIs).
+
+    Servicios necesarios:
+        Servidor de base de datos MariaDB.
+        Un servidor local para ejecutar la aplicación, como el servidor integrado de Laravel.
+
+    Herramientas opcionales:
+        Editor de código (VSCode recomendado).
+        Git para control de versiones.
+
+Pasos para preparar el proyecto
+
+Sigue estos pasos para tener la aplicación lista para trabajar:
+
+    Clonar el repositorio
+        Ejecuta en la terminal:
+
+    git clone https://github.com/IvanFerrerF/ud3_ejercicio3.2.git
+    cd ud3_ejercicio3.2
+
+Instalar dependencias del proyecto
+
+    Ejecuta el siguiente comando para instalar las dependencias de Laravel:
+
+    composer install
+
+Configurar el archivo .env
+
+    Copia el archivo de ejemplo .env.example a .env:
+
+cp .env.example .env
+
+Modifica las siguientes líneas para configurar la conexión a la base de datos:
+
+    DB_CONNECTION=mariadb
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=gestion_notas
+    DB_USERNAME=root
+    DB_PASSWORD=m1_s3cr3t
+
+Levantar la base de datos con Docker
+
+    Asegúrate de que Docker esté en ejecución.
+    Construye y levanta el contenedor:
+
+    docker build -t mariadb-server .
+    docker run -d --name mariadb-server -p 3306:3306 mariadb-server
+
+Migrar y poblar la base de datos
+
+    Limpia la configuración en caché:
+
+php artisan config:clear
+
+Ejecuta las migraciones para crear las tablas:
+
+php artisan migrate
+
+Pobla la base de datos con datos de prueba:
+
+    php artisan db:seed
+
+Iniciar el servidor de desarrollo
+
+    Ejecuta el servidor local de Laravel:
+
+php artisan serve
+
+Accede a la aplicación en el navegador:
+
+        http://127.0.0.1:8000
+
+    Probar las APIs con Postman
+        Abre Postman y carga la colección exportada en la carpeta raíz del proyecto (GestionNotas API.postman_collection.json).
+        Ejecuta las solicitudes para verificar que todo funcione correctamente.
+
+Resumen
+
+    Clona el repositorio.
+    Configura el entorno en .env.
+    Instala dependencias con Composer.
+    Levanta la base de datos con Docker.
+    Aplica migraciones y seeders.
+    Ejecuta el servidor local y prueba las APIs.
