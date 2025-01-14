@@ -29,8 +29,13 @@ class AlumnoController extends Controller
             'email' => 'required|email|unique:alumnos,email',
         ]);
 
-        // Crear el nuevo alumno
-        $alumno = Alumno::create($request->all());
+        // Crear una nueva instancia del modelo Alumno
+        $alumno = new Alumno();
+        $alumno->nombre = $request->nombre;
+        $alumno->email = $request->email;
+
+        // Guardar el alumno en la base de datos
+        $alumno->save();
 
         // Devolver la respuesta con el nuevo alumno creado
         return response()->json($alumno, 201);
